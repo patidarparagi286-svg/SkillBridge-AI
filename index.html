@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillBridge AI - Multi-Agent Career Mentor</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/features.css">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar glass-panel">
+      <div class="logo-container">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SkillBridge <span class="gradient-text">AI</span></div>
+      </div>
+      
+      <nav style="flex-grow: 1;">
+        <ul class="nav-list">
+          <li class="nav-item active" data-view="dashboard">
+            <button><i data-lucide="layout-dashboard"></i> Dashboard</button>
+          </li>
+          <li class="nav-item" data-view="resume">
+            <button><i data-lucide="file-text"></i> Resume Analyzer</button>
+          </li>
+          <li class="nav-item" data-view="roadmap">
+            <button><i data-lucide="map"></i> Study Roadmap</button>
+          </li>
+          <li class="nav-item" data-view="projects">
+            <button><i data-lucide="folder-git-2"></i> Project Recommender</button>
+          </li>
+          <li class="nav-item" data-view="star">
+            <button><i data-lucide="award"></i> STAR Story Builder</button>
+          </li>
+          <li class="nav-item" data-view="linkedin">
+            <button><i data-lucide="linkedin"></i> LinkedIn Optimizer</button>
+          </li>
+          <li class="nav-item" data-view="debate">
+            <button><i data-lucide="users"></i> Consortium Lounge</button>
+          </li>
+          <li class="nav-item" data-view="achievements">
+            <button><i data-lucide="trophy"></i> Achievements</button>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar" id="user-avatar-initials">JD</div>
+          <div class="user-info">
+            <div class="user-name" id="user-display-name">Job Seeker</div>
+            <div class="user-title" id="user-target-role-badge">Select target role</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="header glass-panel">
+        <div class="header-title" id="current-view-title">Dashboard</div>
+        <div class="header-actions">
+          <!-- API Configuration Mode status -->
+          <div id="ai-mode-status" class="badge badge-warning" style="cursor: pointer;">
+            <i data-lucide="alert-circle" style="width: 14px; height: 14px; margin-right: 4px;"></i> Simulation Mode
+          </div>
+          <button class="settings-btn" id="open-settings-btn" title="Settings">
+            <i data-lucide="settings"></i>
+          </button>
+        </div>
+      </header>
+      
+      <!-- Main view body wrapper -->
+      <div class="content-body">
+        
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-panel active">
+          <div class="welcome-banner">
+            <div class="welcome-info">
+              <h1 id="welcome-user-text">Welcome back, Job Seeker!</h1>
+              <p style="color: var(--text-muted);">Your multi-agent career mentors are ready to assist you today.</p>
+            </div>
+            <div>
+              <button class="btn btn-primary" onclick="window.app.switchView('resume')">
+                <i data-lucide="plus"></i> New Analysis
+              </button>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              
+              <!-- Stats Row -->
+              <div class="stats-grid">
+                <div class="glass-card stat-card">
+                  <div class="stat-icon"><i data-lucide="file-check"></i></div>
+                  <div>
+                    <div class="stat-val" id="stats-resume-scans">0</div>
+                    <div class="stat-lbl">Resume Scans</div>
+                  </div>
+                </div>
+                <div class="glass-card stat-card">
+                  <div class="stat-icon" style="color: var(--color-secondary);"><i data-lucide="target"></i></div>
+                  <div>
+                    <div class="stat-val" id="stats-gaps-fixed">0%</div>
+                    <div class="stat-lbl">Syllabus Progress</div>
+                  </div>
+                </div>
+                <div class="glass-card stat-card">
+                  <div class="stat-icon" style="color: var(--color-accent);"><i data-lucide="message-square"></i></div>
+                  <div>
+                    <div class="stat-val" id="stats-interviews-taken">0</div>
+                    <div class="stat-lbl">Mock Interviews</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Active Learning Roadmap Summary -->
+              <div class="glass-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                  <h3 class="gradient-text">Study Planner Progress</h3>
+                  <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="window.app.switchView('roadmap')">View Full Roadmap</button>
+                </div>
+                <div id="dash-roadmap-summary">
+                  <div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">
+                    <i data-lucide="map" style="width: 48px; height: 48px; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                    <p>No active roadmap. Go to "Resume Analyzer" and complete an analysis to get started!</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column Dashboard -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              
+              <!-- Role / Match Score -->
+              <div class="glass-card" style="text-align: center;">
+                <h3 style="margin-bottom: 1rem;">Target Career Role</h3>
+                <div id="dash-role-info" style="margin-bottom: 1.5rem;">
+                  <div class="badge badge-primary" style="font-size: 0.9rem; padding: 0.5rem 1rem; margin-bottom: 0.5rem;" id="dash-role-name">None Selected</div>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);" id="dash-role-desc">Analyze your resume to lock in your targets.</p>
+                </div>
+                
+                <div class="circular-match-container">
+                  <svg class="progress-ring" width="140" height="140">
+                    <circle class="progress-ring__circle" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="60" cx="70" cy="70"/>
+                    <circle class="progress-ring__circle" id="dash-match-circle" stroke="var(--color-primary)" stroke-width="8" stroke-dasharray="376.99 376.99" stroke-dashoffset="376.99" fill="transparent" r="60" cx="70" cy="70"/>
+                  </svg>
+                  <div class="match-percentage-text" id="dash-match-percent">0%</div>
+                </div>
+                <div style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Match Index</div>
+              </div>
+
+              <!-- Quick Launch Consortium Debate -->
+              <div class="glass-card" style="background: linear-gradient(135deg, rgba(139,92,246,0.06) 0%, rgba(6,182,212,0.06) 100%); border-color: rgba(6,182,212,0.2);">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Consortium Debate</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Let your AI Mentors debate your resume profile and suggest changes together.</p>
+                <button class="btn btn-accent" style="width: 100%; font-size: 0.8rem; padding: 0.5rem;" onclick="window.app.switchView('debate')">
+                  Launch Lounge <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUME ANALYZER VIEW -->
+        <div id="view-resume" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <h3>Analyze Resume & Detect Gaps</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Upload your resume text, specify your desired career target, and allow our agents to review details.</p>
+            
+            <div class="grid-2">
+              <div>
+                <div class="form-group">
+                  <label class="form-label">Target Role</label>
+                  <select class="form-select" id="resume-target-role">
+                    <option value="Frontend Engineer">Frontend Engineer</option>
+                    <option value="Backend Engineer">Backend Engineer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="Product Manager">Product Manager</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Your Name</label>
+                  <input type="text" class="form-input" id="resume-user-name" value="Job Seeker">
+                </div>
+              </div>
+              <div class="form-group" style="display: flex; flex-direction: column; height: 100%;">
+                <label class="form-label">Job Description (Optional)</label>
+                <textarea class="form-textarea" id="resume-job-desc" placeholder="Paste custom target job description to match against..." style="flex-grow: 1; min-height: 105px; resize: none;"></textarea>
+              </div>
+            </div>
+
+            <!-- Upload drag/drop area -->
+            <div class="upload-zone" id="resume-upload-zone" style="margin-top: 1rem;">
+              <i data-lucide="cloud-upload" class="upload-icon"></i>
+              <h4 style="margin-bottom: 0.5rem;">Paste Resume Contents or Drag File</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Drag your text/PDF resume here, or paste the text content below.</p>
+              <textarea class="form-textarea" id="resume-text-input" placeholder="Paste your resume text here..." style="min-height: 150px; background: rgba(0,0,0,0.25);"></textarea>
+            </div>
+            
+            <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem;">
+              <button class="btn btn-secondary" id="clear-resume-btn">Reset</button>
+              <button class="btn btn-primary" id="analyze-resume-btn">
+                <i data-lucide="zap"></i> Start AI Analysis
+              </button>
+            </div>
+          </div>
+
+          <!-- Analysis Output Panel (Hidden by default until run) -->
+          <div id="resume-output-container" class="glass-card" style="display: none;">
+            <h3 class="gradient-text" style="margin-bottom: 1.25rem;">Analysis Results</h3>
+            
+            <div class="analysis-results-box">
+              
+              <!-- Left Score & Matches Card -->
+              <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div class="glass-card" style="text-align: center; background: rgba(0,0,0,0.15);">
+                  <h4 style="margin-bottom: 1rem;">ATS Match Score</h4>
+                  <div class="circular-match-container">
+                    <svg class="progress-ring" width="140" height="140">
+                      <circle class="progress-ring__circle" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="60" cx="70" cy="70"/>
+                      <circle class="progress-ring__circle" id="output-match-circle" stroke="var(--color-success)" stroke-width="8" stroke-dasharray="376.99 376.99" stroke-dashoffset="376.99" fill="transparent" r="60" cx="70" cy="70"/>
+                    </svg>
+                    <div class="match-percentage-text" id="output-match-percent">0%</div>
+                  </div>
+                </div>
+                
+                <div class="glass-card" style="background: rgba(0,0,0,0.15);">
+                  <h4 style="margin-bottom: 0.75rem;">Advisor Feedback</h4>
+                  <p id="output-advisor-feedback" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">Formatting looks good. Some impact metrics could be added.</p>
+                </div>
+              </div>
+
+              <!-- Right Gaps and Checklist -->
+              <div class="glass-card" style="background: rgba(0,0,0,0.15);">
+                <h4 style="margin-bottom: 1rem;">Syllabus Gap Checklist</h4>
+                <div class="skills-list-container" id="output-skills-checklist">
+                  <!-- Skill checks generated dynamically -->
+                </div>
+                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                  <button class="btn btn-accent" onclick="window.app.switchView('roadmap')">
+                    Generate Study Roadmap <i data-lucide="map" style="width: 14px; height: 14px;"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- STUDY ROADMAP VIEW -->
+        <div id="view-roadmap" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div>
+                <h3>Personalized Learning Roadmap</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Week-by-week study syllabus structured to target your specific skill gaps.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); padding: 0.5rem 1rem; border-radius: var(--border-radius-md);">
+                <label class="form-label" style="margin-bottom: 0; font-size: 0.8rem; font-weight: 600;">Hours/Week:</label>
+                <input type="number" id="roadmap-hours-budget" class="form-input" style="width: 70px; padding: 0.3rem 0.5rem; font-size: 0.85rem; text-align: center;" value="15" min="5" max="60">
+              </div>
+            </div>
+            
+            <div id="roadmap-timeline-box" class="roadmap-timeline">
+              <!-- Roadmap nodes populated dynamically -->
+              <div style="text-align: center; padding: 3rem 0; color: var(--text-muted);">
+                <i data-lucide="map-pin" style="width: 48px; height: 48px; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                <p>Run your Resume Analysis first to initialize your custom study planner!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT RECOMMENDER VIEW -->
+        <div id="view-projects" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <h3>Portfolio Project Recommender</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Hands-on project ideas mapped to beginner, intermediate, and advanced levels to fill in missing resume skills.</p>
+            
+            <div class="grid-3" id="projects-grid-container">
+              <!-- Projects cards populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- STAR STORY BUILDER VIEW -->
+        <div id="view-star" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <h3>STAR Method Interview Story Builder</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Construct structured behavioral stories (Situation, Task, Action, Result) for typical interview prompts.</p>
+            
+            <div class="interview-layout">
+              <div>
+                <h4 style="margin-bottom: 0.75rem;">Behavioral Prompts</h4>
+                <div class="question-list-sidebar" id="star-prompts-list">
+                  <!-- Prompt selections -->
+                </div>
+              </div>
+              
+              <div class="glass-card" style="background: rgba(0,0,0,0.15);">
+                <div class="badge badge-secondary" style="margin-bottom: 0.75rem;">STAR Framework Workspace</div>
+                <h4 id="star-selected-prompt" style="margin-bottom: 1rem;">Select a prompt on the left to start writing.</h4>
+                
+                <div class="star-builder-grid">
+                  <div class="star-input-group">
+                    <div class="star-header-row">
+                      <div class="star-letter-badge">S</div>
+                      <span style="font-size: 0.85rem; font-weight: 600;">Situation</span>
+                    </div>
+                    <textarea class="form-textarea" id="star-input-s" placeholder="Describe the background context, challenge, or scenario you faced..." style="min-height: 60px;"></textarea>
+                  </div>
+                  
+                  <div class="star-input-group">
+                    <div class="star-header-row">
+                      <div class="star-letter-badge">T</div>
+                      <span style="font-size: 0.85rem; font-weight: 600;">Task</span>
+                    </div>
+                    <textarea class="form-textarea" id="star-input-t" placeholder="Specify your responsibilities or the objectives that needed to be achieved..." style="min-height: 60px;"></textarea>
+                  </div>
+                  
+                  <div class="star-input-group">
+                    <div class="star-header-row">
+                      <div class="star-letter-badge">A</div>
+                      <span style="font-size: 0.85rem; font-weight: 600;">Action</span>
+                    </div>
+                    <textarea class="form-textarea" id="star-input-a" placeholder="Detail the specific actions you took, technical skills used, and decisions made..." style="min-height: 80px;"></textarea>
+                  </div>
+                  
+                  <div class="star-input-group">
+                    <div class="star-header-row">
+                      <div class="star-letter-badge">R</div>
+                      <span style="font-size: 0.85rem; font-weight: 600;">Result</span>
+                    </div>
+                    <textarea class="form-textarea" id="star-input-r" placeholder="Detail the outcomes, what was accomplished, metrics, and lessons learned..." style="min-height: 60px;"></textarea>
+                  </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                  <button class="btn btn-secondary" id="star-load-example-btn">Load Template Example</button>
+                  <button class="btn btn-primary" id="star-evaluate-btn">
+                    <i data-lucide="check-circle-2"></i> Review Story
+                  </button>
+                </div>
+                
+                <!-- Feedback Box -->
+                <div id="star-feedback-box" class="glass-card" style="margin-top: 1.5rem; display: none; background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.2);">
+                  <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+                    <div class="user-avatar" style="width: 24px; height: 24px; font-size: 0.65rem; background: var(--color-warning);">E</div>
+                    <span style="font-size: 0.8rem; font-weight: 700;">Elena (Interview Coach) Review:</span>
+                  </div>
+                  <p id="star-feedback-content" style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main);"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LINKEDIN OPTIMIZER VIEW -->
+        <div id="view-linkedin" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <h3>LinkedIn Profile & Headline Optimizer</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Optimize your profile's headlines, about summary, and key highlights to rank higher in recruiter search filters.</p>
+            
+            <div class="compare-grid">
+              <div class="compare-pane">
+                <label class="form-label">Current profile details</label>
+                <textarea class="form-textarea" id="linkedin-current-input" placeholder="Paste your current headline and summary section..." style="flex-grow: 1; min-height: 300px; resize: none; margin-bottom: 1rem;"></textarea>
+                <button class="btn btn-primary" id="linkedin-optimize-btn" style="width: 100%;">
+                  <i data-lucide="zap"></i> Optimize Profile
+                </button>
+              </div>
+              
+              <div class="compare-pane">
+                <label class="form-label">Optimized profile recommendations</label>
+                <div class="compare-body optimized" id="linkedin-optimized-output">
+                  <!-- Optimized outputs -->
+                  <div style="text-align: center; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted);">
+                    <i data-lucide="sparkles" style="width: 36px; height: 36px; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                    <p>Optimized suggestions will load here.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSORTIUM DEBATE VIEW -->
+        <div id="view-debate" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <h3>Consortium Lounge (Multi-Agent Debate)</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Let all 4 specialized mentors evaluate your resume profile, debate career priorities, and output a consensus plan.</p>
+              </div>
+              <button class="btn btn-accent" id="trigger-debate-btn">
+                <i data-lucide="play-circle"></i> Start Debate
+              </button>
+            </div>
+            
+            <div class="debate-room">
+              <div class="debate-transcript" id="debate-transcript-box">
+                <div style="text-align: center; margin: auto; max-width: 400px; padding: 2rem 0; color: var(--text-muted);">
+                  <i data-lucide="users" style="width: 56px; height: 56px; margin-bottom: 0.75rem; opacity: 0.5; display: inline-block;"></i>
+                  <h4>Initiate Agent Consultation</h4>
+                  <p style="font-size: 0.8rem; margin-top: 0.5rem;">Alex, Sarah, Marcus, and Elena will analyze your current profiles, debate roadmap paths, and collaborate on a strategy document.</p>
+                </div>
+              </div>
+              
+              <div class="debate-action-bar">
+                <div style="font-size: 0.8rem; color: var(--text-muted);" id="debate-status-text">Lounge Idle</div>
+                <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" id="copy-debate-summary-btn" disabled>
+                  <i data-lucide="copy" style="width: 14px; height: 14px;"></i> Copy Recommendation Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACHIEVEMENTS VIEW -->
+        <div id="view-achievements" class="view-panel">
+          <div class="glass-card" style="margin-bottom: 1.5rem;">
+            <h3>Unlocked Achievements & Milestones</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem;">Gamified rewards tracking your growth and preparation readiness.</p>
+            
+            <div class="achievements-grid" id="achievements-list-grid">
+              <!-- Achievements populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Floating Chat Drawer Panel -->
+    <div class="chat-drawer" id="floating-chat-drawer">
+      <div class="chat-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div class="logo-icon" style="width: 24px; height: 24px; font-size: 0.85rem;">A</div>
+          <span style="font-weight: 700; font-family: var(--font-heading);">AI Mentor Lounge</span>
+        </div>
+        <button class="settings-btn" id="close-chat-btn" style="width: 28px; height: 28px;">
+          <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+        </button>
+      </div>
+      
+      <!-- Agent selector tab links -->
+      <div class="chat-agents-selector" id="chat-agent-pills">
+        <!-- Generated dynamically -->
+      </div>
+      
+      <!-- Message history scroll list -->
+      <div class="chat-messages" id="chat-messages-container">
+        <!-- Messages loaded dynamically -->
+      </div>
+      
+      <!-- Chat Input form -->
+      <div class="chat-input-area">
+        <input type="text" class="form-input" id="chat-text-input" placeholder="Ask Mentor a question..." style="border-radius: var(--border-radius-md);">
+        <button class="btn btn-primary" id="chat-send-btn" style="padding: 0.75rem; border-radius: var(--border-radius-md);">
+          <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toggle Chat button -->
+    <button class="chat-trigger-btn" id="floating-chat-trigger" title="Chat with Mentors">
+      <i data-lucide="message-square"></i>
+    </button>
+
+    <!-- SETTINGS MODAL DIALOG -->
+    <div id="settings-modal" class="glass-panel" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(12px);">
+      <div class="glass-card" style="width: 500px; max-width: 90%; background: var(--bg-secondary); border-color: var(--border-glass-active);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 0.75rem;">
+          <h3 class="gradient-text"><i data-lucide="settings" style="vertical-align: middle;"></i> Application Settings</h3>
+          <button class="settings-btn" id="close-settings-btn" style="width: 28px; height: 28px;">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Gemini API Key</label>
+          <input type="password" class="form-input" id="settings-api-key" placeholder="Enter your gemini-2.5-flash key...">
+          <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; display: block;">Keys are stored in your browser's local sandbox storage and never shared.</span>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+          <button class="btn btn-secondary" id="settings-reset-data">Reset User Data</button>
+          <button class="btn btn-primary" id="settings-save-btn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Javascript Modules -->
+  <script type="module" src="src/js/store.js"></script>
+  <script type="module" src="src/js/mockData.js"></script>
+  <script type="module" src="src/js/ai.js"></script>
+  <script type="module" src="src/js/agents.js"></script>
+  <script type="module" src="src/js/app.js"></script>
+
+  <script>
+    // Load lucide icons initially
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
