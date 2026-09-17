@@ -1,25 +1,71 @@
-# SkillBridge-AI
+# 🎓 SkillBridge AI
 
-**What if every student had a team of expert career mentors available 24/7?**
+> **Your Personal Multi-Agent Career Mentor for Smarter Learning, Skill Growth, and Career Success.**
 
-**SkillBridge AI** transforms that idea into reality through a collaborative multi-agent AI platform. Instead of relying on a single chatbot, it brings together specialized AI agents that work as a coordinated career advisory team. Each agent focuses on a specific responsibility—understanding your profile, identifying skill gaps, designing a personalized learning journey, recommending real-world projects, and preparing you for interviews.
+[![GitHub Stars](https://img.shields.io/github/stars/patidarparagi286-svg/SkillBridge-AI?style=social)](https://github.com/patidarparagi286-svg/SkillBridge-AI)
+[![GitHub License](https://img.shields.io/github/license/patidarparagi286-svg/SkillBridge-AI)](LICENSE)
+[![Deployment Status](https://img.shields.io/github/deployments/patidarparagi286-svg/SkillBridge-AI/github-pages?label=Live%20Demo)](https://patidarparagi286-svg.github.io/SkillBridge-AI/)
 
-Whether you're a beginner exploring career options or a final-year student preparing for placements, SkillBridge AI provides guidance tailored to your goals. Users simply upload their resume or describe their interests, choose a target career, and receive a complete action plan. The platform analyzes their current abilities, compares them with industry expectations, identifies missing skills, recommends learning resources, suggests portfolio-worthy projects, and generates role-specific interview practice.
+---
 
-Unlike traditional career guidance platforms, SkillBridge AI doesn't just tell users **where they stand**—it guides them **step by step toward where they want to be**. Every recommendation is personalized, practical, and designed to help users build confidence while preparing for real-world opportunities.
+## 💡 Overview
 
-By combining intelligent AI agents into a single collaborative workflow, SkillBridge AI bridges the gap between education and employment, making career planning smarter, more accessible, and truly personalized.
+*What if every student had a team of expert career mentors available 24/7?*
 
-### **Key Highlights**
+**SkillBridge AI** turns that idea into reality using a collaborative multi-agent AI system. Instead of relying on a single static chatbot, it orchestrates specialized AI agents into a coordinated advisory team. Each agent handles a specific role: profile analysis, skill-gap identification, personalized roadmap generation, real-world project curation, and targeted interview preparation.
 
-* Multi-agent AI collaboration instead of a single assistant.
-* Personalized career guidance based on individual skills and goals.
-* Intelligent skill-gap analysis aligned with industry requirements.
-* AI-generated learning roadmaps with actionable milestones.
-* Real-world project recommendations to strengthen portfolios.
-* Role-specific interview preparation with feedback.
-* Interactive dashboard to monitor progress and achievements.
-* Secure, user-friendly, and scalable platform for students and job seekers.
+---
 
+## ✨ Key Features
 
+- 🤖 **Multi-Agent Collaboration:** A team of specialized AI agents working together instead of a single generalist prompt.
+- 🎯 **Intelligent Skill-Gap Analysis:** Matches current student capabilities against live industry requirements.
+- 🗺️ **Personalized Learning Roadmaps:** Generates step-by-step milestones tailored to target career roles.
+- 📂 **Portfolio Project Recommendations:** Curates real-world, industry-relevant projects to strengthen resumes.
+- 🎙️ **Role-Specific Interview Prep:** Conducts mock interviews with actionable, real-time feedback.
+- 📊 **Interactive Dashboard:** Monitors learning velocity, skill acquisition, and career milestones.
 
+---
+
+## 🛠️ Architecture & Workflow
+[ User Input ] ---> ( Profile & Resume Analyzer Agent )
+|
+v
+( Skill-Gap Analysis Agent )
+|
++-------------------+-------------------+
+|                   |                   |
+v                   v                   v
+( Roadmap Generator )  ( Project Curator )  ( Interview Coach )
+|                   |                   |
++-------------------+-------------------+
+|
+v
+[ Interactive Dashboard ]
+
+---
+🛠️ Tech Stack
+Frontend: HTML5, CSS3, JavaScript (ES6+)
+
+Hosting: GitHub Pages
+
+AI Infrastructure: Multi-Agent Framework / API Integrations
+
+---
+## 🚀 Getting Started
+
+### 🌐 Live Demo
+Check out the live deployment on [GitHub Pages](https://patidarparagi286-svg.github.io/SkillBridge-AI/).
+
+### 💻 Local Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/patidarparagi286-svg/SkillBridge-AI.git](https://github.com/patidarparagi286-svg/SkillBridge-AI.git)
+   cd SkillBridge-AI
+
+2. **Open the platform:**
+Simply launch index.html in your browser or run a lightweight local server:
+
+```Bash
+   npx serve .
