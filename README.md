@@ -21,4 +21,5 @@ By combining intelligent AI agents into a single collaborative workflow, SkillBr
 * Interactive dashboard to monitor progress and achievements.
 * Secure, user-friendly, and scalable platform for students and job seekers.
 
-**Tagline:** *"From Learning to Landing Your Dream Career—One AI Agent at a Time."*
+
+
